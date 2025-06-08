@@ -1,0 +1,8 @@
+# Project dependencies
+opencv-python
+face_recognition
+numpy
+Flask
+Flask-SocketIO
+python-socketio[client]
+Werkzeug

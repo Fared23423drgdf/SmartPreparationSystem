@@ -1,0 +1,340 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="refresh" content="10">
+        <title>Live Attendance Dashboard - 2025-06-09</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+        <style>
+            body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 20px; background-color: #f0f2f5; color: #333; line-height: 1.6; }
+            .container { background-color: #fff; padding: 25px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 1200px; margin: 20px auto; }
+            h1 { color: #0056b3; text-align: center; margin-bottom: 20px; font-size: 2em; }
+            .info-bar { text-align: center; margin-bottom: 25px; font-size: 0.95em; color: #555; }
+            .info-bar span { font-weight: bold; color: #007bff; }
+            .countdown-message { text-align: center; margin: 20px 0; padding: 12px; background-color: #e9f7fd; border: 1px solid #b3e0f2; color: #0c5460; border-radius: 5px; }
+
+            .filter-section {
+                background-color: #f9f9f9; padding: 15px; border-radius: 8px; border: 1px solid #e0e0e0;
+                display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; align-items: center;
+                margin-bottom: 25px;
+            }
+            .filter-group { display: flex; flex-direction: column; }
+            .filter-group label { font-size: 0.85em; margin-bottom: 5px; color: #555; }
+            .filter-section input[type="date"],
+            .filter-section input[type="text"],
+            .filter-section select {
+                padding: 8px 10px; border: 1px solid #ccc; border-radius: 4px;
+                font-size: 0.9em; width: 150px;
+            }
+            .filter-section button {
+                background-color: #28a745; color: white; border: none; padding: 9px 18px;
+                border-radius: 5px; cursor: pointer; font-size: 0.9em; transition: background-color 0.2s;
+            }
+            .filter-section button:hover { background-color: #218838; }
+            .filter-section button.clear { background-color: #6c757d; }
+            .filter-section button.clear:hover { background-color: #5a6268; }
+
+
+            .action-buttons { margin-bottom: 20px; text-align: right; }
+            .action-buttons button {
+                background-color: #007bff; color: white; border: none; padding: 10px 15px;
+                border-radius: 5px; cursor: pointer; font-size: 0.9em; margin-left: 10px;
+                transition: background-color 0.2s;
+            }
+            .action-buttons button:hover { background-color: #0056b3; }
+            .action-buttons button.pdf { background-color: #dc3545; }
+            .action-buttons button.pdf:hover { background-color: #c82333; }
+
+            table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 0.95em; }
+            th, td { padding: 12px 15px; border: 1px solid #dee2e6; text-align: left; vertical-align: middle; }
+            th { background-color: #007bff; color: white; font-weight: 600; text-transform: uppercase; }
+            tbody tr:nth-child(even) { background-color: #f8f9fa; }
+            tbody tr:hover { background-color: #e9ecef; }
+            .status-present { color: #28a745; font-weight: bold; }
+            .status-unknown { color: #fd7e14; font-weight: bold; }
+            .status-present::before { content: '✔ '; }
+            .status-unknown::before { content: '⚠ '; }
+            .snapshot-link { color: #007bff; text-decoration: underline; cursor: pointer; }
+            .snapshot-link:hover { color: #0056b3; }
+
+            .footer { text-align: center; margin-top: 30px; font-size: 0.9em; color: #6c757d; }
+            .no-records { text-align: center; padding: 20px; color: #888; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Live Attendance Dashboard</h1>
+            <div class="info-bar">
+                <span>Date: 2025-06-09</span> | Last Updated: <span>00:47:05</span>
+            </div>
+            <div class="countdown-message" id="countdown-message">
+                This page will show a session end message in <span id="countdown-timer">3600</span> seconds. It will continue to auto-refresh.
+            </div>
+
+            <div class="filter-section">
+                <div class="filter-group">
+                    <label for="startDate">تاريخ البدء:</label>
+                    <input type="date" id="startDate">
+                </div>
+                <div class="filter-group">
+                    <label for="endDate">تاريخ الانتهاء:</label>
+                    <input type="date" id="endDate">
+                </div>
+                <div class="filter-group">
+                    <label for="filterName">الاسم:</label>
+                    <input type="text" id="filterName" placeholder="بحث بالاسم">
+                </div>
+                <div class="filter-group">
+                    <label for="filterStatus">الحالة:</label>
+                    <select id="filterStatus">
+                        <option value="">الكل</option>
+                        <option value="Present">حاضر</option>
+                        <option value="Unknown - Logged">فرد غير معروف</option>
+                    </select>
+                </div>
+                <button onclick="applyFilters()">تطبيق الفلاتر</button>
+                <button class="clear" onclick="clearFilters()">مسح الفلاتر</button>
+            </div>
+
+            <div class="action-buttons">
+                <button onclick="downloadCSV('attendance_log_2025-06-09.csv')">تنزيل CSV مفلتر</button>
+                <button onclick="downloadPDF('attendance_log_2025-06-09.pdf')" class="pdf">تنزيل PDF مفلتر</button>
+            </div>
+
+            <table id="attendanceTable">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>اللقطة</th>
+                        <th>الاسم</th>
+                        <th>وقت الوصول</th>
+                        <th>الحالة</th>
+                        <th>الطابع الزمني (كامل)</th>
+                    </tr>
+                </thead>
+                <tbody>
+    <tr><td colspan="6" class="no-records">لا توجد سجلات حضور لهذا اليوم بعد.</td></tr>
+                </tbody>
+            </table>
+            <div class="footer">
+                نظام الحضور بالتعرف على الوجه بالذكاء الاصطناعي. يتم التحديث تلقائياً كل 10 ثانية.
+            </div>
+        </div>
+
+        <script>
+            let countdown = 3600;
+            const timerElement = document.getElementById('countdown-timer');
+            const messageElement = document.getElementById('countdown-message');
+
+            // --- Countdown Timer ---
+            function updateCountdown() {
+                if (countdown > 0) {
+                    timerElement.textContent = countdown;
+                    countdown--;
+                } else {
+                    messageElement.innerHTML = 'انتهت فترة عرض جلسة لوحة التحكم. ستستمر الصفحة في التحديث ببيانات جديدة إذا كان نص Python البرمجي قيد التشغيل.';
+                    clearInterval(intervalId);
+                }
+            }
+            const intervalId = setInterval(updateCountdown, 1000);
+            updateCountdown(); // Initial call
+
+            // --- Filtering Logic ---
+            function applyFilters() {
+                const startDate = document.getElementById('startDate').value;
+                const endDate = document.getElementById('endDate').value;
+                const filterName = document.getElementById('filterName').value.toLowerCase();
+                const filterStatus = document.getElementById('filterStatus').value;
+
+                const table = document.getElementById('attendanceTable');
+                const tr = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+
+                for (let i = 0; i < tr.length; i++) {
+                    let displayRow = true;
+
+                    // Skip the 'No records' row if it exists
+                    if (tr[i].classList.contains('no-records') || tr[i].querySelector('.no-records')) {
+                        tr[i].style.display = 'none';
+                        continue;
+                    }
+
+                    const nameCell = tr[i].getElementsByTagName('td')[2];
+                    const statusCell = tr[i].getElementsByTagName('td')[4];
+                    const timestampCell = tr[i].getElementsByTagName('td')[5];
+
+                    if (nameCell) {
+                        const nameText = nameCell.textContent.toLowerCase();
+                        if (filterName && !nameText.includes(filterName)) {
+                            displayRow = false;
+                        }
+                    }
+
+                    if (statusCell) {
+                        const statusText = statusCell.textContent.trim();
+                        if (filterStatus && (filterStatus === "Present" && !statusText.startsWith("Present"))) {
+                            displayRow = false;
+                        } else if (filterStatus && (filterStatus === "Unknown - Logged" && statusText !== "Unknown - Logged")) {
+                            displayRow = false;
+                        }
+                    }
+
+                    if (timestampCell && (startDate || endDate)) {
+                        const fullTimestamp = timestampCell.getAttribute('data-timestamp');
+                        if (fullTimestamp) {
+                            const recordDate = fullTimestamp.substring(0, 10);
+                            if (startDate && recordDate < startDate) {
+                                displayRow = false;
+                            }
+                            if (endDate && recordDate > endDate) {
+                                displayRow = false;
+                            }
+                        } else {
+                             displayRow = false;
+                        }
+                    }
+
+                    tr[i].style.display = displayRow ? '' : 'none';
+                }
+            }
+
+            function clearFilters() {
+                document.getElementById('startDate').value = '';
+                document.getElementById('endDate').value = '';
+                document.getElementById('filterName').value = '';
+                document.getElementById('filterStatus').value = '';
+                applyFilters();
+            }
+
+            // --- CSV Export Logic ---
+            function escapeCsvCell(cellData) {
+                if (cellData == null) return '';
+                let stringData = String(cellData);
+                if (stringData.includes('<a href')) {
+                    const hrefMatch = stringData.match(/href="([^"]*)"/);
+                    stringData = (hrefMatch && hrefMatch[1]) ? hrefMatch[1] : "Snapshot Link";
+                } else {
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = stringData;
+                    stringData = tempDiv.innerText;
+                }
+
+                if (stringData.includes(',') || stringData.includes('"') || stringData.includes('\n')) {
+                    return '"' + stringData.replace(/"/g, '""') + '"';
+                }
+                return stringData;
+            }
+
+            function downloadCSV(filename) {
+                let csv = [];
+                const table = document.getElementById('attendanceTable');
+                const headerRow = table.getElementsByTagName('thead')[0].getElementsByTagName('tr')[0];
+                const visibleBodyRows = Array.from(table.getElementsByTagName('tbody')[0].getElementsByTagName('tr'))
+                                        .filter(row => row.style.display !== 'none');
+
+                const headerCols = headerRow.querySelectorAll("th");
+                let headerData = [];
+                for (let i = 0; i < headerCols.length; i++) {
+                    headerData.push(escapeCsvCell(headerCols[i].innerText));
+                }
+                csv.push(headerData.join(","));
+
+                for (let i = 0; i < visibleBodyRows.length; i++) {
+                    const row = [], cols = visibleBodyRows[i].querySelectorAll("td");
+                    for (let j = 0; j < cols.length; j++) {
+                        let cellContent = cols[j].innerHTML;
+                        if (j === 1 && cols[j].querySelector('a')) {
+                             cellContent = cols[j].querySelector('a').href;
+                        } else if (j === 5 && cols[j].hasAttribute('data-timestamp')) {
+                            cellContent = cols[j].getAttribute('data-timestamp');
+                        } else {
+                             cellContent = cols[j].innerText;
+                        }
+                        row.push(escapeCsvCell(cellContent));
+                    }
+                    csv.push(row.join(","));
+                }
+
+                const csvFile = new Blob([csv.join("\n")], { type: "text/csv;charset=utf-8;" });
+                const downloadLink = document.createElement("a");
+                downloadLink.download = filename;
+                downloadLink.href = window.URL.createObjectURL(csvFile);
+                downloadLink.style.display = "none";
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
+            }
+
+            // --- PDF Export Logic ---
+            function downloadPDF(filename) {
+                const {jsPDF} = window.jspdf;
+                const doc = new jsPDF({ orientation: 'landscape' });
+                doc.text("Attendance Log - 2025-06-09", 14, 16);
+                doc.setFontSize(10);
+                doc.text("Generated: " + new Date().toLocaleString(), 14, 22);
+
+                const table = document.getElementById('attendanceTable');
+                const header = Array.from(table.getElementsByTagName('thead')[0].getElementsByTagName('th')).map(th => th.innerText);
+                const body = [];
+                const visibleBodyRows = Array.from(table.getElementsByTagName('tbody')[0].getElementsByTagName('tr'))
+                                        .filter(row => row.style.display !== 'none');
+
+                visibleBodyRows.forEach(row => {
+                    const rowData = [];
+                    const cells = row.querySelectorAll('td');
+                    cells.forEach((cell, index) => {
+                        if (index === 1) {
+                            const linkElement = cell.querySelector('a');
+                            rowData.push(linkElement ? "Snapshot Available (Link)" : "N/A");
+                        } else if (index === 5 && cell.hasAttribute('data-timestamp')) {
+                            rowData.push(cell.getAttribute('data-timestamp'));
+                        } else {
+                            rowData.push(cell.innerText.trim());
+                        }
+                    });
+                    body.push(rowData);
+                });
+
+
+                doc.autoTable({
+                    head: [header],
+                    body: body,
+                    startY: 28,
+                    theme: 'grid',
+                    headStyles: { fillColor: [0, 123, 255] },
+                    columnStyles: {
+                        0: { cellWidth: 15 },
+                        1: { cellWidth: 35 },
+                        2: { cellWidth: 40 },
+                        3: { cellWidth: 25 },
+                        4: { cellWidth: 35 },
+                        5: { cellWidth: 'auto' }
+                    }
+                });
+                doc.save(filename);
+            }
+
+            // Initial filter application when page loads (useful if you pre-set dates in the future)
+            document.addEventListener('DOMContentLoaded', () => {
+                const today = new Date().toISOString().split('T')[0];
+                document.getElementById('startDate').value = today;
+                document.getElementById('endDate').value = today;
+                applyFilters(); // Apply filters on load
+
+                // --- Debugging for empty table ---
+                const tableBody = document.getElementById('attendanceTable').getElementsByTagName('tbody')[0];
+                const rowCount = tableBody.getElementsByTagName('tr').length;
+                console.log('DEBUG (Browser): Table body row count on DOMContentLoaded:', rowCount);
+                if (rowCount === 0 || (rowCount === 1 && tableBody.querySelector('.no-records'))) {
+                    console.log('DEBUG (Browser): Table appears empty or only has "no records" message.');
+                } else {
+                    console.log('DEBUG (Browser): Table appears to have data. First row innerHTML:', tableBody.getElementsByTagName('tr')[0].innerHTML);
+                }
+                // --- End Debugging ---
+            });
+        </script>
+    </body>
+    </html>
+    
