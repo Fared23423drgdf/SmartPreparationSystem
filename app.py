@@ -1,50 +1,81 @@
 import os
-from flask import Flask, render_template, send_from_directory, Response
-from flask_socketio import SocketIO, emit
+import cv2
+from PIL import Image, ImageTk
+import tkinter as tk
+from datetime import datetime
 
 from face_recognition.camera import Camera
 from face_recognition import face_utils
-
-app = Flask(__name__)
-app.config['SECRET_KEY'] = 'your_secret_key'
-socketio = SocketIO(app, cors_allowed_origins="*")
-
-KNOWN_ENCODINGS, KNOWN_NAMES = face_utils.load_known_faces()
-camera = Camera()
+from utils import attendance
 
 
-@app.route('/')
-def index():
-    return render_template('Face_recognition_demo.html')
+class AttendanceApp:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Face Recognition Attendance")
+
+        attendance.ensure_dirs()
+        self.known_encodings, self.known_names = face_utils.load_known_faces()
+        self.camera = Camera()
+        self.running = False
+
+        self.video_label = tk.Label(root)
+        self.video_label.pack()
+
+        btn_frame = tk.Frame(root)
+        btn_frame.pack(pady=10)
+        self.start_btn = tk.Button(btn_frame, text="Start", command=self.start)
+        self.start_btn.pack(side="left", padx=5)
+        self.stop_btn = tk.Button(btn_frame, text="Stop", command=self.stop, state="disabled")
+        self.stop_btn.pack(side="left", padx=5)
+
+    def start(self):
+        if not self.running:
+            self.camera.start()
+            self.running = True
+            self.start_btn.config(state="disabled")
+            self.stop_btn.config(state="normal")
+            self.update_frame()
+
+    def stop(self):
+        self.running = False
+        self.camera.release()
+        self.start_btn.config(state="normal")
+        self.stop_btn.config(state="disabled")
+
+    def update_frame(self):
+        if not self.running:
+            return
+        frame = self.camera.read_frame()
+        if frame is not None:
+            locations, names = face_utils.recognize_faces(frame, self.known_encodings, self.known_names)
+            face_utils.draw_overlays(frame, locations, names)
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            for (top, right, bottom, left), name in zip(locations, names):
+                face_img = frame[top:bottom, left:right]
+                if name == "Unknown":
+                    save_dir = attendance.UNKNOWN_DIR
+                    status = "Unknown - Logged"
+                else:
+                    save_dir = attendance.CAPTURED_DIR
+                    status = "Present"
+                os.makedirs(save_dir, exist_ok=True)
+                snap_path = os.path.join(save_dir, f"{name}_{timestamp}.jpg")
+                cv2.imwrite(snap_path, face_img)
+                attendance.log_entry(name, snap_path, status)
+            rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            img = Image.fromarray(rgb)
+            imgtk = ImageTk.PhotoImage(image=img)
+            self.video_label.imgtk = imgtk
+            self.video_label.configure(image=imgtk)
+        self.root.after(10, self.update_frame)
 
 
-@app.route('/processed/<filename>')
-def serve_processed(filename):
-    return send_from_directory(os.path.join('data', 'processed'), filename)
+def main():
+    root = tk.Tk()
+    AttendanceApp(root)
+    root.mainloop()
 
 
-@socketio.on('upload_image')
-def handle_image_upload(data):
-    file_data = data.get('file')
-    filename = data.get('filename')
-    out_name, summary = face_utils.process_uploaded_image(
-        file_data, filename, KNOWN_ENCODINGS, KNOWN_NAMES
-    )
-    emit('image_processed', {
-        'url': f'/processed/{out_name}',
-        'summary': summary,
-        'filename': filename,
-    })
-
-
-@app.route('/video_feed')
-def video_feed():
-    return Response(
-        camera.generate_frames(KNOWN_ENCODINGS, KNOWN_NAMES),
-        mimetype='multipart/x-mixed-replace; boundary=frame'
-    )
-
-
-if __name__ == '__main__':
-    socketio.run(app, host='0.0.0.0', port=5000)
-
+if __name__ == "__main__":
+    main()

@@ -4,55 +4,55 @@
         "timestamp": "2025-06-03T19:39:56.674359",
         "time_arrival": "19:39:56",
         "status": "Unknown - Logged",
-        "snapshot_path": "data/unknown_faces_detected/Unknown_20250603_193956_674359.jpg"
+        "snapshot_path": "data/unknown_faces/Unknown_20250603_193956_674359.jpg"
     },
     {
         "name": "Faris",
         "timestamp": "2025-06-03T20:21:26.182547",
         "time_arrival": "20:21:26",
         "status": "Present",
-        "snapshot_path": "data/snapshots/Faris_20250603_202126.jpg"
+        "snapshot_path": "data/captured_faces/Faris_20250603_202126.jpg"
     },
     {
         "name": "Unknown Individual",
         "timestamp": "2025-06-03T20:31:35.376116",
         "time_arrival": "20:31:35",
         "status": "Unknown - Logged",
-        "snapshot_path": "data/unknown_faces_detected/Unknown_20250603_203135_376116.jpg"
+        "snapshot_path": "data/unknown_faces/Unknown_20250603_203135_376116.jpg"
     },
     {
         "name": "Fares",
         "timestamp": "2025-06-03T20:34:31.165558",
         "time_arrival": "20:34:31",
         "status": "Present",
-        "snapshot_path": "data/snapshots/Fares_20250603_203431.jpg"
+        "snapshot_path": "data/captured_faces/Fares_20250603_203431.jpg"
     },
     {
         "name": "Unknown Individual",
         "timestamp": "2025-06-03T20:53:52.094703",
         "time_arrival": "20:53:52",
         "status": "Unknown - Logged",
-        "snapshot_path": "data/unknown_faces_detected/Unknown_20250603_205352_094703.jpg"
+        "snapshot_path": "data/unknown_faces/Unknown_20250603_205352_094703.jpg"
     },
     {
         "name": "Unknown Individual",
         "timestamp": "2025-06-03T20:54:02.561858",
         "time_arrival": "20:54:02",
         "status": "Unknown - Logged",
-        "snapshot_path": "data/unknown_faces_detected/Unknown_20250603_205402_561858.jpg"
+        "snapshot_path": "data/unknown_faces/Unknown_20250603_205402_561858.jpg"
     },
     {
         "name": "Unknown Individual",
         "timestamp": "2025-06-03T20:54:02.946241",
         "time_arrival": "20:54:02",
         "status": "Unknown - Logged",
-        "snapshot_path": "data/unknown_faces_detected/Unknown_20250603_205402_946241.jpg"
+        "snapshot_path": "data/unknown_faces/Unknown_20250603_205402_946241.jpg"
     },
     {
         "name": "Unknown Individual",
         "timestamp": "2025-06-03T20:54:04.016659",
         "time_arrival": "20:54:04",
         "status": "Unknown - Logged",
-        "snapshot_path": "data/unknown_faces_detected/Unknown_20250603_205404_016659.jpg"
+        "snapshot_path": "data/unknown_faces/Unknown_20250603_205404_016659.jpg"
     }
 ]
