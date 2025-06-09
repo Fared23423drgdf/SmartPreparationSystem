@@ -32,6 +32,17 @@ data/
    ```
 3. Place images of known individuals inside `data/known_faces` before running the app.
 
+## Quick Start (Beginner)
+1. Clone or download this repository.
+2. Verify Python is installed with `python --version`.
+3. Install the requirements as shown above.
+4. Add a few images to `data/known_faces` so the system can recognize them.
+5. Start the server with:
+```bash
+python app.py
+```
+6. Open `http://localhost:5000` in your browser.
+
 ## Usage
 
 Run the main application:
