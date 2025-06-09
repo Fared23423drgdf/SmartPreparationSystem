@@ -452,6 +452,21 @@
             margin-bottom: 10px;
         }
         
+        /* How To Run Section */
+        #how-to-run {
+            background: var(--section-bg);
+        }
+
+        #how-to-run ol {
+            max-width: 700px;
+            margin: 0 auto;
+            padding-left: 1.2rem;
+        }
+
+        #how-to-run li {
+            margin-bottom: 10px;
+        }
+
         /* Footer */
         footer {
             background: #0a1929;
@@ -599,7 +614,7 @@
                     <p data-lang="hero-desc">نظام ذكي يعتمد على تقنيات الذكاء الاصطناعي للتعرف على الوجوه وتسجيل الحضور تلقائياً، مما يوفر وقت المعلمين ويحسن دقة السجلات.</p>
                     
                     <div class="cta-buttons">
-                        <a href="#overview" class="btn btn-primary" data-lang="hero-btn-1">
+                        <a href="#timeline" class="btn btn-primary" data-lang="hero-btn-1">
                             <i class="fas fa-info-circle"></i> تعرف على المشروع
                         </a>
                         <a href="#contact" class="btn btn-secondary" data-lang="hero-btn-2">
@@ -676,6 +691,20 @@
         </div>
     </section>
 
+    <!-- How To Run Section -->
+    <section id="how-to-run">
+        <div class="container">
+            <div class="section-title">
+                <h2 data-lang="run-title">How to run</h2>
+            </div>
+            <ol class="run-steps">
+                <li data-lang="run-step1">Install requirements with <code>pip install -r requirements.txt</code>.</li>
+                <li data-lang="run-step2">From the <code>backend</code> folder run <code>python app.py</code>.</li>
+                <li data-lang="run-step3">Open <code>http://localhost:5000</code> in your browser.</li>
+            </ol>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer>
         <div class="container">
@@ -700,6 +729,10 @@
                 'hero-desc': 'An intelligent system based on AI technologies to recognize faces and record attendance automatically, saving teachers time and improving record accuracy.',
                 'hero-btn-1': 'Learn More',
                 'hero-btn-2': 'Contact Team',
+                'run-title': 'How to run this project',
+                'run-step1': 'Install requirements with pip.',
+                'run-step2': 'Run python app.py from the backend folder.',
+                'run-step3': 'Open http://localhost:5000 in your browser.',
                 'timeline-title': 'Project Timeline',
                 'timeline-subtitle': 'The project implementation phases and the proposed schedule',
                 'timeline-week1-label': 'Week 1',
@@ -732,7 +765,12 @@
                 'nav-home': 'الرئيسية',
                 'nav-timeline': 'الجدول الزمني',
                 'hero-title': 'نظام التعرف على الوجوه',
+                'hero-btn-1': 'تعرف على المشروع',
                 'hero-btn-2': 'تواصل مع الفريق',
+                'run-title': 'طريقة تشغيل المشروع',
+                'run-step1': 'ثبت المتطلبات باستخدام pip.',
+                'run-step2': 'شغل python app.py من مجلد backend.',
+                'run-step3': 'افتح المتصفح على http://localhost:5000.',
                 'timeline-title': 'الجدول الزمني',
                 'timeline-subtitle': 'مراحل تنفيذ المشروع والجدول الزمني المقترح',
                 'timeline-week1-label': 'الأسبوع 1',
