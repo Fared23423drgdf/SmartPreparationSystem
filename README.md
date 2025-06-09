@@ -37,18 +37,17 @@ data/
 2. Verify Python is installed with `python --version`.
 3. Install the requirements as shown above.
 4. Add a few images to `data/known_faces` so the system can recognize them.
-5. Start the server with:
+5. Start the application with:
 ```bash
-python app.py
+python main.py
 ```
-6. Open `http://localhost:5000` in your browser.
 
 ## Usage
 
 Run the main application:
 
 ```bash
-python app.py
+python main.py
 ```
 
 A Tkinter window will appear allowing you to start/stop the camera. An HTML dashboard is generated automatically and can be opened in a browser to view attendance records.
