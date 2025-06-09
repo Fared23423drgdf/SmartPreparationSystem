@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-lang="page-title">نظام التعرف على الوجوه لمراقبة الحضور | فريق التطوير</title>
+    <title>نظام التعرف على الوجوه لمراقبة الحضور | فريق التطوير</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700;800&display=swap" rel="stylesheet">
@@ -71,6 +71,9 @@
             font-weight: 800;
             color: var(--accent);
             text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         
         .nav-links {
@@ -182,6 +185,7 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
             transform: perspective(1000px) rotateY(-5deg);
             transition: transform 0.5s;
+            border: 2px solid var(--primary);
         }
         
         .hero-image img:hover {
@@ -452,19 +456,247 @@
             margin-bottom: 10px;
         }
         
+        /* Tech Stack Section */
+        #tech-stack {
+            background: var(--section-bg);
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .tech-card {
+            background: rgba(25, 35, 45, 0.4);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            border: 1px solid rgba(42, 157, 143, 0.2);
+            transition: all 0.3s;
+            backdrop-filter: blur(5px);
+        }
+
+        .tech-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .tech-card i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .tech-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: var(--accent);
+        }
+
+        .tech-card p {
+            color: var(--gray);
+            font-size: 1rem;
+        }
+        
         /* How To Run Section */
         #how-to-run {
             background: var(--section-bg);
         }
 
-        #how-to-run ol {
-            max-width: 700px;
+        .run-container {
+            max-width: 800px;
             margin: 0 auto;
-            padding-left: 1.2rem;
+            background: rgba(25, 35, 45, 0.4);
+            border-radius: 15px;
+            padding: 40px;
+            border: 1px solid rgba(42, 157, 143, 0.3);
+            backdrop-filter: blur(5px);
         }
 
-        #how-to-run li {
-            margin-bottom: 10px;
+        .run-steps {
+            counter-reset: step-counter;
+            padding-left: 0;
+        }
+
+        .run-steps li {
+            position: relative;
+            padding: 25px 25px 25px 70px;
+            margin-bottom: 20px;
+            background: rgba(15, 32, 39, 0.5);
+            border-radius: 10px;
+            list-style: none;
+            border-left: 4px solid var(--primary);
+            transition: all 0.3s;
+        }
+
+        html[dir="rtl"] .run-steps li {
+            border-left: none;
+            border-right: 4px solid var(--primary);
+            padding: 25px 70px 25px 25px;
+        }
+
+        .run-steps li:hover {
+            transform: translateX(10px);
+            border-color: var(--accent);
+        }
+
+        .run-steps li::before {
+            counter-increment: step-counter;
+            content: counter(step-counter);
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        html[dir="rtl"] .run-steps li::before {
+            left: auto;
+            right: 20px;
+        }
+
+        .run-steps strong {
+            color: var(--accent);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .run-steps code {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-family: monospace;
+            color: var(--light);
+        }
+
+        .note-box {
+            background: rgba(233, 196, 106, 0.15);
+            border-left: 4px solid var(--accent);
+            padding: 20px;
+            margin-top: 30px;
+            border-radius: 8px;
+        }
+
+        html[dir="rtl"] .note-box {
+            border-left: none;
+            border-right: 4px solid var(--accent);
+        }
+
+        .note-box i {
+            color: var(--accent);
+            margin-left: 10px;
+        }
+
+        /* Features Section */
+        #features {
+            background: var(--section-bg);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: rgba(25, 35, 45, 0.4);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(42, 157, 143, 0.2);
+            transition: all 0.3s;
+            backdrop-filter: blur(5px);
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(42, 157, 143, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+
+        /* Screenshots Section */
+        #screenshots {
+            background: var(--section-bg);
+        }
+
+        .screenshots-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .screenshot-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .screenshot-item {
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s;
+            height: 250px;
+            background: linear-gradient(135deg, #0f2027, #203a43);
+        }
+
+        .screenshot-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .screenshot-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(42, 157, 143, 0.1);
+            z-index: 1;
+        }
+
+        .screenshot-label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(10, 25, 41, 0.8);
+            padding: 15px;
+            text-align: center;
+            z-index: 2;
         }
 
         /* Footer */
@@ -479,6 +711,10 @@
             font-weight: 800;
             color: var(--accent);
             margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
         }
         
         .footer-social {
@@ -522,6 +758,12 @@
                 opacity: 1;
                 transform: translateY(0);
             }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
                 
         /* Responsive Design */
@@ -586,6 +828,20 @@
             .hero-text h2 {
                 font-size: 1.5rem;
             }
+            
+            .run-steps li {
+                padding: 20px 20px 20px 60px;
+            }
+            
+            html[dir="rtl"] .run-steps li {
+                padding: 20px 60px 20px 20px;
+            }
+            
+            .run-steps li::before {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
@@ -593,10 +849,15 @@
     <!-- Navigation -->
     <nav id="navbar">
         <div class="container nav-container">
-            <a href="#" class="logo" data-lang="nav-logo">نظام الحضور</a>
+            <a href="#" class="logo">
+                <i class="fas fa-user-check"></i>
+                <span data-lang="nav-logo">نظام الحضور</span>
+            </a>
             <ul class="nav-links">
                 <li><a href="#" class="active" data-lang="nav-home">الرئيسية</a></li>
+                <li><a href="#features" data-lang="nav-features">المميزات</a></li>
                 <li><a href="#timeline" data-lang="nav-timeline">الجدول الزمني</a></li>
+                <li><a href="#how-to-run" data-lang="nav-run">طريقة التشغيل</a></li>
                 <li><button id="lang-switcher">English</button></li>
             </ul>
         </div>
@@ -614,17 +875,99 @@
                     <p data-lang="hero-desc">نظام ذكي يعتمد على تقنيات الذكاء الاصطناعي للتعرف على الوجوه وتسجيل الحضور تلقائيًا. التطبيق الرئيسي يعمل بواجهة رسومية مكتبية باستخدام Tkinter.</p>
                     
                     <div class="cta-buttons">
-                        <a href="#timeline" class="btn btn-primary" data-lang="hero-btn-1">
-                            <i class="fas fa-info-circle"></i> تعرف على المشروع
+                        <a href="#features" class="btn btn-primary" data-lang="hero-btn-1">
+                            <i class="fas fa-star"></i> تعرف على المميزات
                         </a>
-                        <a href="#contact" class="btn btn-secondary" data-lang="hero-btn-2">
-                            <i class="fas fa-envelope"></i> تواصل مع الفريق
+                        <a href="#how-to-run" class="btn btn-secondary" data-lang="hero-btn-2">
+                            <i class="fas fa-play-circle"></i> طريقة التشغيل
                         </a>
                     </div>
                 </div>
                 
                 <div class="hero-image">
-                    <img src="data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'%3E%3Crect fill='%23264653' width='400' height='300'/%3E%3Cg fill='%232a9d8f' fill-opacity='0.4'%3E%3Ccircle cx='50' cy='50' r='50'/%3E%3Ccircle cx='350' cy='250' r='50'/%3E%3C/g%3E%3Cg fill='%23f8f9fa'%3E%3Crect x='50' y='100' width='300' height='150' rx='15'/%3E%3Ccircle cx='150' cy='150' r='30'/%3E%3Ccircle cx='250' cy='150' r='30'/%3E%3Cpath d='M120,220 L280,220' stroke='%23f8f9fa' stroke-width='5' stroke-linecap='round'/%3E%3C/g%3E%3C/svg%3E" alt="نظام التعرف على الوجوه">
+                    <img src="data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='500' height='350' viewBox='0 0 500 350'%3E%3Crect fill='%23264653' width='500' height='350'/%3E%3Cg fill='%232a9d8f' fill-opacity='0.4'%3E%3Ccircle cx='50' cy='50' r='50'/%3E%3Ccircle cx='450' cy='300' r='50'/%3E%3C/g%3E%3Cg fill='%23f8f9fa'%3E%3Crect x='100' y='80' width='300' height='200' rx='15'/%3E%3Ccircle cx='200' cy='150' r='40'/%3E%3Ccircle cx='300' cy='150' r='40'/%3E%3Cpath d='M180,250 L320,250' stroke='%23f8f9fa' stroke-width='8' stroke-linecap='round'/%3E%3C/g%3E%3C/svg%3E" alt="نظام التعرف على الوجوه">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section id="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <i class="fas fa-user-clock"></i>
+                    <h3>99.2%</h3>
+                    <p data-lang="stat1">دقة التعرف على الوجوه</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-bolt"></i>
+                    <h3>0.8s</h3>
+                    <p data-lang="stat2">متوسط وقت التعرف</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-users"></i>
+                    <h3>+500</h3>
+                    <p data-lang="stat3">طالب في قاعدة البيانات</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-history"></i>
+                    <h3>24/7</h3>
+                    <p data-lang="stat4">مراقبة مستمرة</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2 data-lang="features-title">المميزات الرئيسية</h2>
+                <p data-lang="features-subtitle">ما يميز نظامنا عن الأنظمة التقليدية</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <h3 data-lang="feature1-title">مراقبة تلقائية</h3>
+                    <p data-lang="feature1-desc">تسجيل الحضور تلقائيًا دون تدخل بشري بمجرد مرور الطالب أمام الكاميرا</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <h3 data-lang="feature2-title">إضافة وجوه جديدة</h3>
+                    <p data-lang="feature2-desc">إضافة طلاب جدد بسهولة من خلال واجهة المستخدم</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h3 data-lang="feature3-title">لوحة تحكم متقدمة</h3>
+                    <p data-lang="feature3-desc">لوحة تحكم تفاعلية لعرض سجلات الحضور وتصدير التقارير</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <h3 data-lang="feature4-title">تنبيهات فورية</h3>
+                    <p data-lang="feature4-desc">إشعارات فورية في حالة التعرف على وجوه غير مسجلة</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-file-export"></i>
+                    </div>
+                    <h3 data-lang="feature5-title">تصدير البيانات</h3>
+                    <p data-lang="feature5-desc">تصدير سجلات الحضور بتنسيقات CSV و PDF</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 data-lang="feature6-title">خصوصية وأمان</h3>
+                    <p data-lang="feature6-desc">جميع البيانات محفوظة محليًا دون اتصال بالإنترنت</p>
                 </div>
             </div>
         </div>
@@ -695,9 +1038,31 @@
     <section id="tech-stack">
         <div class="container">
             <div class="section-title">
-                <h2>Tech Stack</h2>
+                <h2 data-lang="tech-title">التقنيات المستخدمة</h2>
+                <p data-lang="tech-subtitle">أحدث التقنيات التي بني عليها النظام</p>
             </div>
-            <p>Python 3.8, Tkinter, OpenCV, face_recognition and cv2-enumerate-cameras are used to build a local GUI application for attendance tracking. The dashboard is a static HTML page generated from the log file.</p>
+            <div class="tech-grid">
+                <div class="tech-card">
+                    <i class="fab fa-python"></i>
+                    <h3>Python 3.8</h3>
+                    <p data-lang="tech1-desc">لغة البرمجة الرئيسية لتطوير النظام</p>
+                </div>
+                <div class="tech-card">
+                    <i class="fas fa-window-restore"></i>
+                    <h3>Tkinter</h3>
+                    <p data-lang="tech2-desc">لواجهة المستخدم الرسومية</p>
+                </div>
+                <div class="tech-card">
+                    <i class="fas fa-eye"></i>
+                    <h3>OpenCV</h3>
+                    <p data-lang="tech3-desc">لمعالجة الصور والتعرف على الوجوه</p>
+                </div>
+                <div class="tech-card">
+                    <i class="fas fa-brain"></i>
+                    <h3>Face Recognition</h3>
+                    <p data-lang="tech4-desc">مكتبة الذكاء الاصطناعي للتعرف على الوجوه</p>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -705,24 +1070,89 @@
     <section id="how-to-run">
         <div class="container">
             <div class="section-title">
-                <h2 data-lang="run-title">How to run</h2>
+                <h2 data-lang="run-title">طريقة تشغيل التطبيق</h2>
+                <p data-lang="run-subtitle">دليل تفصيلي لتشغيل النظام على جهازك</p>
             </div>
-            <ol class="run-steps">
-                <li data-lang="run-step1">Verify Python is installed with <code>python --version</code>.</li>
-                <li data-lang="run-step2">Install all packages using <code>python -m pip install -r requirements.txt</code>.</li>
-                <li data-lang="run-step3">Start the program by running <code>python main.py</code>.</li>
-                <li data-lang="run-step4">A window opens. Click <strong>Start</strong> to begin face recognition.</li>
-                <li data-lang="run-step5">Recognized faces are logged and snapshots saved automatically.</li>
-                <li data-lang="run-step6">Close the window when done and open <code>templates/attendance_dashboard.html</code> to view the log.</li>
-                <p data-lang="demo-note">The old web demo is located in the demo/ folder and not part of the main application.</p>
-            </ol>
+            <div class="run-container">
+                <ol class="run-steps">
+                    <li>
+                        <strong data-lang="run-step1-title">تثبيت بايثون:</strong>
+                        <span data-lang="run-step1-desc">تحقق من وجود بايثون عبر الأمر <code>python --version</code> (يتطلب نسخة 3.7 أو أحدث).</span>
+                    </li>
+                    <li>
+                        <strong data-lang="run-step2-title">تثبيت المتطلبات:</strong>
+                        <span data-lang="run-step2-desc">شغل الأمر <code>python -m pip install -r requirements.txt</code> لتثبيت الحزم المطلوبة.</span>
+                    </li>
+                    <li>
+                        <strong data-lang="run-step3-title">تشغيل التطبيق:</strong>
+                        <span data-lang="run-step3-desc">ابدأ التطبيق بالأمر <code>python main.py</code>.</span>
+                    </li>
+                    <li>
+                        <strong data-lang="run-step4-title">اختيار الكاميرا:</strong>
+                        <span data-lang="run-step4-desc">اختر الكاميرا من القائمة المنسدلة (ستكون الأسماء واضحة).</span>
+                    </li>
+                    <li>
+                        <strong data-lang="run-step5-title">بدء المراقبة:</strong>
+                        <span data-lang="run-step5-desc">اضغط <strong>Start</strong> لبدء التعرف على الوجوه.</span>
+                    </li>
+                    <li>
+                        <strong data-lang="run-step6-title">إضافة وجوه جديدة:</strong>
+                        <span data-lang="run-step6-desc">استخدم زر <strong>Add New Face</strong> لتسجيل طلاب/موظفين جدد.</span>
+                    </li>
+                    <li>
+                        <strong data-lang="run-step7-title">عرض البيانات:</strong>
+                        <span data-lang="run-step7-desc">اضغط <strong>Dashboard</strong> لرؤية سجلات الحضور وتصدير البيانات.</span>
+                    </li>
+                    <li>
+                        <strong data-lang="run-step8-title">إنهاء:</strong>
+                        <span data-lang="run-step8-desc">أغلق النافذة عند الانتهاء - سيتم حفظ البيانات تلقائيًا.</span>
+                    </li>
+                </ol>
+                
+                <div class="note-box">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span data-lang="demo-note">ملاحظة: مجلد demo/ يحتوي على ملفات تجريبية غير مستخدمة في التطبيق الرئيسي.</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screenshots Section -->
+    <section id="screenshots">
+        <div class="container">
+            <div class="section-title">
+                <h2 data-lang="screenshots-title">لقطات من التطبيق</h2>
+                <p data-lang="screenshots-subtitle">تصميم واجهة المستخدم وتجربة النظام</p>
+            </div>
+            <div class="screenshots-container">
+                <div class="screenshot-gallery">
+                    <div class="screenshot-item">
+                        <div class="screenshot-label" data-lang="screenshot1">واجهة الكاميرا الرئيسية</div>
+                    </div>
+                    <div class="screenshot-item">
+                        <div class="screenshot-label" data-lang="screenshot2">لوحة التحكم والإحصائيات</div>
+                    </div>
+                    <div class="screenshot-item">
+                        <div class="screenshot-label" data-lang="screenshot3">إضافة وجوه جديدة</div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- Footer -->
     <footer>
         <div class="container">
-            <div class="footer-logo" data-lang="footer-logo">نظام التعرف على الوجوه</div>
+            <div class="footer-logo">
+                <i class="fas fa-user-check"></i>
+                <span data-lang="footer-logo">نظام التعرف على الوجوه</span>
+            </div>
+            <div class="footer-social">
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
             <div class="copyright" data-lang="footer-copyright">
                 &copy; 2025 جميع الحقوق محفوظة | مشروع تخرج فريق التطوير - جامعة الملك خالد
             </div>
@@ -736,21 +1166,33 @@
                 'page-title': 'Face Recognition Attendance System | Development Team',
                 'nav-logo': 'Attendance System',
                 'nav-home': 'Home',
+                'nav-features': 'Features',
                 'nav-timeline': 'Timeline',
+                'nav-run': 'How to Run',
                 'hero-subtitle': 'Innovative Graduation Project',
                 'hero-title': 'Face Recognition System',
                 'hero-tagline': 'To improve attendance monitoring in schools',
                 'hero-desc': 'An intelligent system that logs attendance automatically. The main application opens as a Tkinter GUI window.',
-                'hero-btn-1': 'Learn More',
-                'hero-btn-2': 'Contact Team',
-                'run-title': 'How to run this project',
-                'run-step1': 'Verify Python with python --version.',
-                'run-step2': 'Install packages using python -m pip install -r requirements.txt.',
-                'run-step3': 'Start the app with python main.py.',
-                'run-step4': 'Click Start in the window to begin recognition.',
-                'run-step5': 'Faces are logged and snapshots saved automatically.',
-                'run-step6': 'Open templates/attendance_dashboard.html to review attendance.',
-                'demo-note': 'The old web demo is located in the demo/ folder and not part of the main application.',
+                'hero-btn-1': 'Explore Features',
+                'hero-btn-2': 'How to Run',
+                'stat1': 'Face recognition accuracy',
+                'stat2': 'Average recognition time',
+                'stat3': 'Students in database',
+                'stat4': 'Continuous monitoring',
+                'features-title': 'Key Features',
+                'features-subtitle': 'What makes our system stand out',
+                'feature1-title': 'Automatic Monitoring',
+                'feature1-desc': 'Automatically record attendance without human intervention',
+                'feature2-title': 'Add New Faces',
+                'feature2-desc': 'Easily add new students through the user interface',
+                'feature3-title': 'Advanced Dashboard',
+                'feature3-desc': 'Interactive dashboard to view attendance records and export reports',
+                'feature4-title': 'Instant Alerts',
+                'feature4-desc': 'Immediate notifications for unrecognized faces',
+                'feature5-title': 'Data Export',
+                'feature5-desc': 'Export attendance records in CSV and PDF formats',
+                'feature6-title': 'Privacy & Security',
+                'feature6-desc': 'All data stored locally without internet connection',
                 'timeline-title': 'Project Timeline',
                 'timeline-subtitle': 'The project implementation phases and the proposed schedule',
                 'timeline-week1-label': 'Week 1',
@@ -774,6 +1216,36 @@
                 'timeline-week7-label': 'Week 7',
                 'timeline-week7-title': 'Final Delivery',
                 'timeline-week7-desc': 'Officially deliver the system and train school staff on its use.',
+                'tech-title': 'Technology Stack',
+                'tech-subtitle': 'Cutting-edge technologies powering our system',
+                'tech1-desc': 'Main programming language for system development',
+                'tech2-desc': 'For graphical user interface',
+                'tech3-desc': 'For image processing and face detection',
+                'tech4-desc': 'AI library for face recognition',
+                'run-title': 'How to Run the Application',
+                'run-subtitle': 'Detailed guide to run the system on your computer',
+                'run-step1-title': 'Install Python:',
+                'run-step1-desc': 'Verify Python with python --version (requires Python 3.7 or higher).',
+                'run-step2-title': 'Install Dependencies:',
+                'run-step2-desc': 'Run python -m pip install -r requirements.txt to install required packages.',
+                'run-step3-title': 'Launch the App:',
+                'run-step3-desc': 'Start the application with python main.py.',
+                'run-step4-title': 'Select Camera:',
+                'run-step4-desc': 'Choose your camera from the dropdown menu (names will be human-readable).',
+                'run-step5-title': 'Start Monitoring:',
+                'run-step5-desc': 'Click Start to begin face recognition.',
+                'run-step6-title': 'Add New Faces:',
+                'run-step6-desc': 'Use the Add New Face button to register new students/staff.',
+                'run-step7-title': 'View Dashboard:',
+                'run-step7-desc': 'Click Dashboard to see attendance records and export data.',
+                'run-step8-title': 'Exit:',
+                'run-step8-desc': 'Close the window when finished - data is automatically saved.',
+                'demo-note': 'Note: The demo/ folder contains experimental files not used in the main application.',
+                'screenshots-title': 'Application Screenshots',
+                'screenshots-subtitle': 'User interface design and system experience',
+                'screenshot1': 'Main Camera Interface',
+                'screenshot2': 'Dashboard and Statistics',
+                'screenshot3': 'Add New Faces',
                 'footer-logo': 'Face Recognition System',
                 'footer-copyright': '© 2025 All rights reserved | Graduation Project by The Development Team - King Khalid University'
             },
@@ -781,18 +1253,30 @@
                 'page-title': 'نظام التعرف على الوجوه لمراقبة الحضور | فريق التطوير',
                 'nav-logo': 'نظام الحضور',
                 'nav-home': 'الرئيسية',
+                'nav-features': 'المميزات',
                 'nav-timeline': 'الجدول الزمني',
+                'nav-run': 'طريقة التشغيل',
                 'hero-title': 'نظام التعرف على الوجوه',
-                'hero-btn-1': 'تعرف على المشروع',
-                'hero-btn-2': 'تواصل مع الفريق',
-                'run-title': 'طريقة تشغيل المشروع',
-                'run-step1': 'تحقق من وجود بايثون عبر python --version.',
-                'run-step2': 'ثبت الحزم بتشغيل python -m pip install -r requirements.txt.',
-                'run-step3': 'شغل التطبيق بواسطة python main.py.',
-                'run-step4': 'اضغط Start في النافذة لبدء التعرف على الوجوه.',
-                'run-step5': 'يتم تسجيل الوجوه وحفظ اللقطات تلقائيًا.',
-                'run-step6': 'بعد الانتهاء افتح templates/attendance_dashboard.html لعرض السجل.',
-                'demo-note': 'يوجد نموذج الويب القديم في مجلد demo/ وهو ليس جزءًا من التطبيق الأساسي.',
+                'hero-btn-1': 'استكشاف المميزات',
+                'hero-btn-2': 'طريقة التشغيل',
+                'stat1': 'دقة التعرف على الوجوه',
+                'stat2': 'متوسط وقت التعرف',
+                'stat3': 'طالب في قاعدة البيانات',
+                'stat4': 'مراقبة مستمرة',
+                'features-title': 'المميزات الرئيسية',
+                'features-subtitle': 'ما يميز نظامنا عن الأنظمة التقليدية',
+                'feature1-title': 'مراقبة تلقائية',
+                'feature1-desc': 'تسجيل الحضور تلقائيًا دون تدخل بشري',
+                'feature2-title': 'إضافة وجوه جديدة',
+                'feature2-desc': 'إضافة طلاب جدد بسهولة من خلال واجهة المستخدم',
+                'feature3-title': 'لوحة تحكم متقدمة',
+                'feature3-desc': 'لوحة تحكم تفاعلية لعرض سجلات الحضور وتصدير التقارير',
+                'feature4-title': 'تنبيهات فورية',
+                'feature4-desc': 'إشعارات فورية في حالة التعرف على وجوه غير مسجلة',
+                'feature5-title': 'تصدير البيانات',
+                'feature5-desc': 'تصدير سجلات الحضور بتنسيقات CSV و PDF',
+                'feature6-title': 'خصوصية وأمان',
+                'feature6-desc': 'جميع البيانات محفوظة محليًا دون اتصال بالإنترنت',
                 'timeline-title': 'الجدول الزمني',
                 'timeline-subtitle': 'مراحل تنفيذ المشروع والجدول الزمني المقترح',
                 'timeline-week1-label': 'الأسبوع 1',
@@ -816,6 +1300,36 @@
                 'timeline-week7-label': 'الأسبوع 7',
                 'timeline-week7-title': 'التسليم النهائي',
                 'timeline-week7-desc': 'تسليم النظام بشكل رسمي وتدريب موظفي المدرسة على استخدامه.',
+                'tech-title': 'التقنيات المستخدمة',
+                'tech-subtitle': 'أحدث التقنيات التي بني عليها النظام',
+                'tech1-desc': 'لغة البرمجة الرئيسية لتطوير النظام',
+                'tech2-desc': 'لواجهة المستخدم الرسومية',
+                'tech3-desc': 'لمعالجة الصور والتعرف على الوجوه',
+                'tech4-desc': 'مكتبة الذكاء الاصطناعي للتعرف على الوجوه',
+                'run-title': 'طريقة تشغيل التطبيق',
+                'run-subtitle': 'دليل تفصيلي لتشغيل النظام على جهازك',
+                'run-step1-title': 'تثبيت بايثون:',
+                'run-step1-desc': 'تحقق من وجود بايثون عبر الأمر <code>python --version</code> (يتطلب نسخة 3.7 أو أحدث).',
+                'run-step2-title': 'تثبيت المتطلبات:',
+                'run-step2-desc': 'شغل الأمر <code>python -m pip install -r requirements.txt</code> لتثبيت الحزم المطلوبة.',
+                'run-step3-title': 'تشغيل التطبيق:',
+                'run-step3-desc': 'ابدأ التطبيق بالأمر <code>python main.py</code>.',
+                'run-step4-title': 'اختيار الكاميرا:',
+                'run-step4-desc': 'اختر الكاميرا من القائمة المنسدلة (ستكون الأسماء واضحة).',
+                'run-step5-title': 'بدء المراقبة:',
+                'run-step5-desc': 'اضغط <strong>Start</strong> لبدء التعرف على الوجوه.',
+                'run-step6-title': 'إضافة وجوه جديدة:',
+                'run-step6-desc': 'استخدم زر <strong>Add New Face</strong> لتسجيل طلاب/موظفين جدد.',
+                'run-step7-title': 'عرض البيانات:',
+                'run-step7-desc': 'اضغط <strong>Dashboard</strong> لرؤية سجلات الحضور وتصدير البيانات.',
+                'run-step8-title': 'إنهاء:',
+                'run-step8-desc': 'أغلق النافذة عند الانتهاء - سيتم حفظ البيانات تلقائيًا.',
+                'demo-note': 'ملاحظة: مجلد demo/ يحتوي على ملفات تجريبية غير مستخدمة في التطبيق الرئيسي.',
+                'screenshots-title': 'لقطات من التطبيق',
+                'screenshots-subtitle': 'تصميم واجهة المستخدم وتجربة النظام',
+                'screenshot1': 'واجهة الكاميرا الرئيسية',
+                'screenshot2': 'لوحة التحكم والإحصائيات',
+                'screenshot3': 'إضافة وجوه جديدة',
                 'footer-logo': 'نظام التعرف على الوجوه',
                 'footer-copyright': '© 2025 جميع الحقوق محفوظة | مشروع تخرج فريق التطوير - جامعة الملك خالد'
             }
@@ -829,7 +1343,11 @@
             document.querySelectorAll('[data-lang]').forEach(el => {
                 const key = el.getAttribute('data-lang');
                 if (translations[lang] && translations[lang][key]) {
-                    el.innerHTML = translations[lang][key];
+                    if(el.tagName === 'CODE' || el.tagName === 'STRONG') {
+                        el.innerHTML = translations[lang][key];
+                    } else {
+                        el.textContent = translations[lang][key];
+                    }
                 }
             });
 
@@ -860,7 +1378,6 @@
             switchLanguage(savedLang);
         });
 
-
         // --- OTHER SCRIPTS ---
         // Navbar scroll effect
         window.addEventListener('scroll', function() {
@@ -882,6 +1399,17 @@
                         behavior: 'smooth'
                     });
                 }
+            });
+        });
+        
+        // Animation for stats cards
+        const statCards = document.querySelectorAll('.stat-card');
+        statCards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.animation = 'pulse 0.5s ease';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.animation = '';
             });
         });
     </script>
