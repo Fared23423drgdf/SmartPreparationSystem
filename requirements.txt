@@ -1,6 +1,25 @@
+# Face Recognition Attendance System Requirements
+
+# Core dependencies
 opencv-python
 face_recognition
 numpy
 Pillow
-cv2-enumerate-cameras
+
+# Web interface & APIs
 Flask
+Flask-SocketIO
+python-socketio[client]
+Werkzeug
+
+# Optional but useful for exporting reports
+reportlab
+
+# For GUI (Tkinter is built-in with most Python distributions)
+# No need to list Tkinter unless using a minimal environment
+
+# For logging (standard lib, no need to include logging module)
+
+# In case of video streaming enhancements
+imutils
+
