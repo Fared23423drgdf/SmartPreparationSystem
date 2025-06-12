@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Student</title>
+    <style>
+        body{font-family:Arial, sans-serif;background:#f9f9f9;}
+        .box{width:300px;margin:50px auto;padding:20px;background:#fff;border-radius:4px;}
+        input,button{width:100%;padding:8px;margin:5px 0;}
+    </style>
+</head>
+<body>
+<div class="box">
+    <h2>Add Student</h2>
+    <form method="post" enctype="multipart/form-data">
+        <input type="text" name="name" placeholder="Name" required>
+        <input type="file" name="image" accept="image/*" required>
+        <button type="submit">Save</button>
+    </form>
+</div>
+</body>
+</html>

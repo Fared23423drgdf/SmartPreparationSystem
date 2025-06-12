@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Attendance Dashboard</title>
+    <style>
+        body{font-family:Arial, sans-serif;background:#fafafa;}
+        .top{display:flex;justify-content:space-between;align-items:center;padding:10px;background:#004466;color:#fff;}
+        .stats{margin:10px;}
+        .alert{background:red;color:#fff;padding:5px;text-align:center;display:none;}
+    </style>
+    <script>
+        function checkAlert(){
+            fetch('/unknown_alert').then(r=>r.json()).then(d=>{
+                document.getElementById('alert').style.display = d.alert?'block':'none';
+            });
+        }
+        setInterval(checkAlert,2000);
+    </script>
+</head>
+<body onload="checkAlert()">
+<div class="top">
+    <form method="post" action="/set_camera">
+        <select name="index">
+        {% for cam in cameras %}
+            <option value="{{ cam.index }}" {% if loop.index0==0 %}selected{% endif %}>{{ cam.name }}</option>
+        {% endfor %}
+        </select>
+        <button type="submit">Select Camera</button>
+    </form>
+    <div>
+        <a href="/add-student">Add Student</a> |
+        <a href="/logout">Logout</a>
+    </div>
+</div>
+<div class="alert" id="alert">Unknown face detected!</div>
+<div class="stats">
+    <p>Total students: {{ stats.total_students }}</p>
+    <p>Today's attendance: {{ stats.today_count }}</p>
+    <p>Most frequent attendee: {{ stats.frequent }}</p>
+</div>
+<img src="/video_feed" width="640" />
+</body>
+</html>
