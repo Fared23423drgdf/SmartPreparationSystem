@@ -1,11 +1,12 @@
 
     <!DOCTYPE html>
-    <html lang="en">
+    <html lang="en" dir="ltr">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="refresh" content="10">
-        <title>Live Attendance Dashboard - 2025-06-09</title>
+        <title data-lang="page-title">Live Attendance Dashboard - 2025-06-09</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
         <style>
@@ -65,66 +66,124 @@
         </style>
     </head>
     <body>
+        <button id="lang-switcher">العربية</button>
         <div class="container">
-            <h1>Live Attendance Dashboard</h1>
+            <h1 data-lang="heading">Live Attendance Dashboard</h1>
             <div class="info-bar">
-                <span>Date: 2025-06-09</span> | Last Updated: <span>00:47:05</span>
+                <span data-lang="date-label">Date:</span> 2025-06-09 | <span data-lang="updated-label">Last Updated:</span> <span>00:47:05</span>
             </div>
-            <div class="countdown-message" id="countdown-message">
+            <div class="countdown-message" id="countdown-message" data-lang="countdown-text">
                 This page will show a session end message in <span id="countdown-timer">3600</span> seconds. It will continue to auto-refresh.
             </div>
 
             <div class="filter-section">
                 <div class="filter-group">
-                    <label for="startDate">تاريخ البدء:</label>
+                    <label for="startDate" data-lang="filter-start">تاريخ البدء:</label>
                     <input type="date" id="startDate">
                 </div>
                 <div class="filter-group">
-                    <label for="endDate">تاريخ الانتهاء:</label>
+                    <label for="endDate" data-lang="filter-end">تاريخ الانتهاء:</label>
                     <input type="date" id="endDate">
                 </div>
                 <div class="filter-group">
-                    <label for="filterName">الاسم:</label>
-                    <input type="text" id="filterName" placeholder="بحث بالاسم">
+                    <label for="filterName" data-lang="filter-name">الاسم:</label>
+                    <input type="text" id="filterName" placeholder="بحث بالاسم" data-lang="filter-name-placeholder">
                 </div>
                 <div class="filter-group">
-                    <label for="filterStatus">الحالة:</label>
+                    <label for="filterStatus" data-lang="filter-status">الحالة:</label>
                     <select id="filterStatus">
-                        <option value="">الكل</option>
-                        <option value="Present">حاضر</option>
-                        <option value="Unknown - Logged">فرد غير معروف</option>
+                        <option value="" data-lang="filter-all">الكل</option>
+                        <option value="Present" data-lang="filter-present">حاضر</option>
+                        <option value="Unknown - Logged" data-lang="filter-unknown">فرد غير معروف</option>
                     </select>
                 </div>
-                <button onclick="applyFilters()">تطبيق الفلاتر</button>
-                <button class="clear" onclick="clearFilters()">مسح الفلاتر</button>
+                <button onclick="applyFilters()" data-lang="apply-filters">تطبيق الفلاتر</button>
+                <button class="clear" onclick="clearFilters()" data-lang="clear-filters">مسح الفلاتر</button>
             </div>
 
             <div class="action-buttons">
-                <button onclick="downloadCSV('attendance_log_2025-06-09.csv')">تنزيل CSV مفلتر</button>
-                <button onclick="downloadPDF('attendance_log_2025-06-09.pdf')" class="pdf">تنزيل PDF مفلتر</button>
+                <button onclick="downloadCSV('attendance_log_2025-06-09.csv')" data-lang="download-csv">تنزيل CSV مفلتر</button>
+                <button onclick="downloadPDF('attendance_log_2025-06-09.pdf')" class="pdf" data-lang="download-pdf">تنزيل PDF مفلتر</button>
             </div>
 
             <table id="attendanceTable">
                 <thead>
                     <tr>
-                        <th>#</th>
-                        <th>اللقطة</th>
-                        <th>الاسم</th>
-                        <th>وقت الوصول</th>
-                        <th>الحالة</th>
-                        <th>الطابع الزمني (كامل)</th>
+                        <th data-lang="th-num">#</th>
+                        <th data-lang="th-snapshot">اللقطة</th>
+                        <th data-lang="th-name">الاسم</th>
+                        <th data-lang="th-time">وقت الوصول</th>
+                        <th data-lang="th-status">الحالة</th>
+                        <th data-lang="th-timestamp">الطابع الزمني (كامل)</th>
                     </tr>
                 </thead>
                 <tbody>
-    <tr><td colspan="6" class="no-records">لا توجد سجلات حضور لهذا اليوم بعد.</td></tr>
+    <tr><td colspan="6" class="no-records" data-lang="no-records">لا توجد سجلات حضور لهذا اليوم بعد.</td></tr>
                 </tbody>
             </table>
-            <div class="footer">
-                نظام الحضور بالتعرف على الوجه بالذكاء الاصطناعي. يتم التحديث تلقائياً كل 10 ثانية.
-            </div>
+            <div class="footer" data-lang="footer">نظام الحضور بالتعرف على الوجه بالذكاء الاصطناعي. يتم التحديث تلقائياً كل 10 ثانية.</div>
         </div>
 
+        <script src="{{ url_for('static', filename='lang.js') }}"></script>
         <script>
+            const translations = {
+                en: {
+                    'page-title': 'Live Attendance Dashboard - 2025-06-09',
+                    'heading': 'Live Attendance Dashboard',
+                    'date-label': 'Date:',
+                    'updated-label': 'Last Updated:',
+                    'countdown-text': 'This page will show a session end message in <span id="countdown-timer">3600</span> seconds. It will continue to auto-refresh.',
+                    'filter-start': 'Start Date:',
+                    'filter-end': 'End Date:',
+                    'filter-name': 'Name:',
+                    'filter-name-placeholder': 'Search by name',
+                    'filter-status': 'Status:',
+                    'filter-all': 'All',
+                    'filter-present': 'Present',
+                    'filter-unknown': 'Unknown - Logged',
+                    'apply-filters': 'Apply Filters',
+                    'clear-filters': 'Clear Filters',
+                    'download-csv': 'Download Filtered CSV',
+                    'download-pdf': 'Download Filtered PDF',
+                    'th-num': '#',
+                    'th-snapshot': 'Snapshot',
+                    'th-name': 'Name',
+                    'th-time': 'Check-in Time',
+                    'th-status': 'Status',
+                    'th-timestamp': 'Timestamp (Full)',
+                    'no-records': 'No attendance records yet for this day.',
+                    'footer': 'AI Face Recognition Attendance System. Auto-refreshes every 10 seconds.'
+                },
+                ar: {
+                    'page-title': 'لوحة حضور مباشرة - 2025-06-09',
+                    'heading': 'لوحة حضور مباشرة',
+                    'date-label': 'التاريخ:',
+                    'updated-label': 'آخر تحديث:',
+                    'countdown-text': 'سيتم عرض رسالة انتهاء الجلسة بعد <span id="countdown-timer">3600</span> ثانية. ستستمر الصفحة بالتحديث التلقائي.',
+                    'filter-start': 'تاريخ البدء:',
+                    'filter-end': 'تاريخ الانتهاء:',
+                    'filter-name': 'الاسم:',
+                    'filter-name-placeholder': 'بحث بالاسم',
+                    'filter-status': 'الحالة:',
+                    'filter-all': 'الكل',
+                    'filter-present': 'حاضر',
+                    'filter-unknown': 'فرد غير معروف',
+                    'apply-filters': 'تطبيق الفلاتر',
+                    'clear-filters': 'مسح الفلاتر',
+                    'download-csv': 'تنزيل CSV مفلتر',
+                    'download-pdf': 'تنزيل PDF مفلتر',
+                    'th-num': '#',
+                    'th-snapshot': 'اللقطة',
+                    'th-name': 'الاسم',
+                    'th-time': 'وقت الوصول',
+                    'th-status': 'الحالة',
+                    'th-timestamp': 'الطابع الزمني (كامل)',
+                    'no-records': 'لا توجد سجلات حضور لهذا اليوم بعد.',
+                    'footer': 'نظام الحضور بالتعرف على الوجه بالذكاء الاصطناعي. يتم التحديث تلقائياً كل 10 ثانية.'
+                }
+            };
+            setupTranslations(translations);
+
             let countdown = 3600;
             const timerElement = document.getElementById('countdown-timer');
             const messageElement = document.getElementById('countdown-message');
@@ -334,7 +393,6 @@
                 }
                 // --- End Debugging ---
             });
-        </script>
     </body>
     </html>
     

@@ -10,6 +10,7 @@ This repository contains a face recognition based attendance system built with P
 - Snapshots of detected faces saved under `data/snapshots` and `data/unknown_faces_detected`.
 - Auto-generated dashboard (`attendance_dashboard.html`) with search, date filtering and CSV/PDF export.
 - `organize_project.py` script for arranging the project directories.
+- `start_attendance.bat` script for Windows that installs requirements and launches the app with one click.
 
 ## Project Structure
 
@@ -41,6 +42,7 @@ data/
 ```bash
 python main.py
 ```
+6. Windows users can alternatively run `start_attendance.bat` to install dependencies and launch the app automatically.
 
 ## Usage
 

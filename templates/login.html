@@ -1,25 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
-    <style>
-        body {font-family: Arial, sans-serif; background:#f0f0f0;}
-        .box {width:300px;margin:100px auto;padding:20px;background:#fff;border-radius:4px;text-align:center;}
-        input[type=password]{width:90%;padding:8px;margin:10px 0;}
-        button{padding:8px 20px;}
-        .error{color:red;}
-    </style>
+    <title data-lang="title">Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-<div class="box">
-    <h2>Admin Login</h2>
-    {% if error %}<p class="error">{{ error }}</p>{% endif %}
+<button id="lang-switcher">العربية</button>
+<div class="container-box">
+    <h2 data-lang="heading">Admin Login</h2>
+    {% if error %}<p class="error" id="error-msg">{{ error }}</p>{% endif %}
     <form method="post">
-        <input type="password" name="password" placeholder="Password" required>
-        <br>
-        <button type="submit">Login</button>
+        <input type="password" name="password" placeholder="Password" required data-lang="password">
+        <button type="submit" data-lang="button">Login</button>
     </form>
 </div>
+<script src="{{ url_for('static', filename='lang.js') }}"></script>
+<script>
+    const translations = {
+        en: {title:'Login', heading:'Admin Login', password:'Password', button:'Login'},
+        ar: {title:'\u062A\u0633\u062C\u064A\u0644 \u0627\u0644\u062F\u062E\u0648\u0644', heading:'\u062A\u0633\u062C\u064A\u0644 \u062F\u062E\u0648\u0644 \u0627\u0644\u0645\u0634\u0631\u0641', password:'\u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631', button:'\u062A\u0633\u062C\u064A\u0644 \u0627\u0644\u062F\u062E\u0648\u0644'}
+    };
+    setupTranslations(translations);
+</script>
 </body>
 </html>
