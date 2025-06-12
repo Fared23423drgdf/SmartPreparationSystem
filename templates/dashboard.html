@@ -1,14 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
-    <title>Attendance Dashboard</title>
-    <style>
-        body{font-family:Arial, sans-serif;background:#fafafa;}
-        .top{display:flex;justify-content:space-between;align-items:center;padding:10px;background:#004466;color:#fff;}
-        .stats{margin:10px;}
-        .alert{background:red;color:#fff;padding:5px;text-align:center;display:none;}
-    </style>
+    <title data-lang="title">Attendance Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <script>
         function checkAlert(){
             fetch('/unknown_alert').then(r=>r.json()).then(d=>{
@@ -19,6 +14,7 @@
     </script>
 </head>
 <body onload="checkAlert()">
+<button id="lang-switcher">العربية</button>
 <div class="top">
     <form method="post" action="/set_camera">
         <select name="index">
@@ -26,19 +22,27 @@
             <option value="{{ cam.index }}" {% if loop.index0==0 %}selected{% endif %}>{{ cam.name }}</option>
         {% endfor %}
         </select>
-        <button type="submit">Select Camera</button>
+        <button type="submit" data-lang="select_cam">Select Camera</button>
     </form>
     <div>
-        <a href="/add-student">Add Student</a> |
-        <a href="/logout">Logout</a>
+        <a href="/add-student" data-lang="add_student">Add Student</a> |
+        <a href="/logout" data-lang="logout">Logout</a>
     </div>
 </div>
-<div class="alert" id="alert">Unknown face detected!</div>
+<div class="alert" id="alert" data-lang="unknown_alert">Unknown face detected!</div>
 <div class="stats">
-    <p>Total students: {{ stats.total_students }}</p>
-    <p>Today's attendance: {{ stats.today_count }}</p>
-    <p>Most frequent attendee: {{ stats.frequent }}</p>
+    <p data-lang="total_students">Total students: {{ stats.total_students }}</p>
+    <p data-lang="today_attendance">Today's attendance: {{ stats.today_count }}</p>
+    <p data-lang="frequent">Most frequent attendee: {{ stats.frequent }}</p>
 </div>
 <img src="/video_feed" width="640" />
+<script src="{{ url_for('static', filename='lang.js') }}"></script>
+<script>
+    const translations = {
+        en:{title:'Attendance Dashboard',select_cam:'Select Camera',add_student:'Add Student',logout:'Logout',unknown_alert:'Unknown face detected!',total_students:'Total students: {{ stats.total_students }}',today_attendance:"Today's attendance: {{ stats.today_count }}",frequent:'Most frequent attendee: {{ stats.frequent }}'},
+        ar:{title:'\u0644\u0648\u062D\u0629 \u0627\u0644\u062D\u0636\u0648\u0631',select_cam:'\u0627\u062E\u062A\u0631 \u0627\u0644\u0643\u0627\u0645\u064A\u0631\u0627',add_student:'\u0625\u0636\u0627\u0641\u0629 \u0637\u0627\u0644\u0628',logout:'\u062A\u0633\u062C\u064A\u0644 \u0627\u0644\u062E\u0631\u0648\u062C',unknown_alert:'\u062A\u0645 \u0643\u0634\u0641 \u0648\u062C\u0647 \u063A\u064A\u0631 \u0645\u0639\u0631\u0648\u0641!',total_students:'\u0625\u062C\u0645\u0627\u0644\u064A \u0627\u0644\u0637\u0644\u0627\u0628: {{ stats.total_students }}',today_attendance:'\u0627\u0644\u062D\u0636\u0648\u0631 \u0627\u0644\u064A\u0648\u0645: {{ stats.today_count }}',frequent:'\u0627\u0644\u0623\u0643\u062B\u0631 \u062D\u0636\u0648\u0631\u0627:\u00A0{{ stats.frequent }}'}
+    };
+    setupTranslations(translations);
+</script>
 </body>
 </html>
