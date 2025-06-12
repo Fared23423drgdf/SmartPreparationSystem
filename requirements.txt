@@ -3,3 +3,4 @@ face_recognition
 numpy
 Pillow
 cv2-enumerate-cameras
+Flask

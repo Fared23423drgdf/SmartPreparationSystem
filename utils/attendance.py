@@ -55,6 +55,40 @@ def log_entry(name: str, snapshot_path: str, status: str) -> None:
         json.dump(data, f, ensure_ascii=False, indent=4)
 
 
+def get_stats():
+    """Return basic statistics for the dashboard."""
+    records = load_log()
+    today = date.today().isoformat()
+    today_recs = [r for r in records if r['timestamp'].startswith(today)]
+
+    known = []
+    for fname in os.listdir(KNOWN_DIR):
+        if fname.lower().endswith(('.jpg', '.jpeg', '.png')):
+            name = os.path.splitext(fname)[0].split('_')[0]
+            known.append(name)
+    total_students = len(set(known))
+
+    present_names = set(r['name'] for r in today_recs if r['status'] == 'Present')
+    today_count = len(present_names)
+
+    unknown_count = sum(1 for r in today_recs if r['status'].startswith('Unknown'))
+    present_count = len(today_recs) - unknown_count
+
+    freq = {}
+    for r in records:
+        if r['status'] == 'Present':
+            freq[r['name']] = freq.get(r['name'], 0) + 1
+    frequent = max(freq.items(), key=lambda x: x[1])[0] if freq else ''
+
+    return {
+        'total_students': total_students,
+        'today_count': today_count,
+        'frequent': frequent,
+        'present': present_count,
+        'unknown': unknown_count,
+    }
+
+
 def generate_dashboard_html() -> str:
     """Generate the dashboard HTML file for today's records and return its path."""
     ensure_dirs()
